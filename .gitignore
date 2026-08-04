@@ -1,0 +1,35 @@
+# Environnement
+.env
+
+# Dépendances
+/vendor/
+
+# Logs et debug
+writable/logs/*
+!writable/logs/index.html
+writable/debugbar/*
+!writable/debugbar/index.html
+writable/cache/*
+!writable/cache/index.html
+writable/session/*
+!writable/session/index.html
+writable/uploads/*
+!writable/uploads/index.html
+
+# IDE / OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Backups
+*.old
+
+# Artefacts de sessions mal générés
+/null/
+/public/WRITEPATH/
+WRITEPATH.'session*
+
+# Claude Code
+.claude/
+
+/public/null/

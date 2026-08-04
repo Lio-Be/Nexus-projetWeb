@@ -33,3 +33,10 @@ WRITEPATH.'session*
 .claude/
 
 /public/null/
+
+phpunit.xml
+
+# Tests PHPUnit
+phpunit.xml
+build/
+phpunit.phar

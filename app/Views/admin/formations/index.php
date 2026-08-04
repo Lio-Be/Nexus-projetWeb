@@ -52,8 +52,8 @@
                 <div class="fw-semibold" style="font-size:13.5px;"><?= esc($f['titre']) ?></div>
             </td>
             <td><div class="fw-semibold" style="font-size:13.5px;"><?= esc($f['nom_pole']) ?></div></td>
-            <td><div class="fw-semibold" style="font-size:13.5px;"><?= esc($f['duree'] !== null ? esc($f['duree']) : '—' )?></div></td>
-            <td><div class="fw-semibold" style="font-size:13.5px;"><?= esc($f['prix'] !== null ? number_format($f['prix'], 2, ',', ' ') . ' €' : '—' )?></div></td>
+            <td><div class="fw-semibold" style="font-size:13.5px;"><?= $f['duree'] !== null ? esc($f['duree']) : '—' ?></div></td>
+            <td><div class="fw-semibold" style="font-size:13.5px;"><?= $f['prix'] !== null ? esc(number_format($f['prix'], 2, ',', ' ')) . ' €' : '—' ?></div></td>
             <td>
                
                 <a href="<?= site_url('admin/formations/edit/' . $f['id_formation']) ?>"

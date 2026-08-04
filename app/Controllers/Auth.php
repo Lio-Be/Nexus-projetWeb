@@ -20,50 +20,56 @@ class Auth extends BaseController
     }
     
     // Méthode 2 : 
-public function attemptLogin()
-{
-    // 1. Instancier UserModel
-    $userModel = new UserModel(); 
-    
-    // 2. getPost : récupérer les données du formulaire POST
-    $email = $this->request->getPost('email');
-    $password = $this->request->getPost('password');
-    
-    // 3. Chercher l'utilisateur par email et donne moi tout sur cet utilisateur (avec SON rôle prioritaire) la requete se trouve dans UserModel
-    $user = $userModel->findByEmail($email);
-    
-    // 4. Si l'utilisateur n'existe pas
-    if (!$user) {
-        return redirect()->back()->with('error', 'Email ou mot de passe incorrect');
+    public function attemptLogin()
+    {
+        $rules = [
+            'email'    => [
+                'rules'  => 'required|valid_email',
+                'errors' => [
+                    'required'    => 'L\'adresse email est obligatoire.',
+                    'valid_email' => 'L\'adresse email n\'est pas valide.',
+                ],
+            ],
+            'password' => [
+                'rules'  => 'required|min_length[8]',
+                'errors' => [
+                    'required'   => 'Le mot de passe est obligatoire.',
+                    'min_length' => 'Le mot de passe doit contenir au moins 8 caractères.',
+                ],
+            ],
+        ];
+
+        if (! $this->validate($rules)) {
+            return redirect()->back()->withInput()->with('error', current($this->validator->getErrors()));
+        }
+
+        $userModel = new UserModel();
+        $email     = $this->request->getPost('email');
+        $password  = $this->request->getPost('password');
+        $user      = $userModel->findByEmail($email);
+
+        if (! $user || ! password_verify($password, $user['password'])) {
+            return redirect()->back()->with('error', 'Email ou mot de passe incorrect');
+        }
+
+        session()->set([
+            'id_compte'  => $user['id_compte'],
+            'nom'        => $user['nom'],
+            'prenom'     => $user['prenom'],
+            'email'      => $user['email'],
+            'role'       => $user['role'],
+            'id_role'    => $user['id_role'],
+            'isLoggedIn' => true,
+        ]);
+
+        if ($user['role'] === 'Admin') {
+            return redirect()->to('/admin/dashboard');
+        } elseif ($user['role'] === 'Formateur') {
+            return redirect()->to('/formateur/dashboard');
+        } else {
+            return redirect()->to('/etudiant/dashboard');
+        }
     }
-    
-    // 5. Vérifier le mot de passe
-    if (!password_verify($password, $user['password'])) {
-        return redirect()->back()->with('error', 'Email ou mot de passe incorrect');
-    }
-    
-    // 6. Si on arrive ici, c'est que tout est OK !
-    // Créer la session
-    session()->set([
-        'id_compte'  => $user['id_compte'],
-        'nom'        => $user['nom'],
-        'prenom'     => $user['prenom'],
-        'email'      => $user['email'],
-        'role'       => $user['role'],        // UN SEUL rôle (le prioritaire)
-        'id_role'    => $user['id_role'],     // Optionnel
-        'isLoggedIn' => true
-    ]);
-    
-    // 7. Redirection selon le rôle
-    // ATTENTION : 'Admin', 'Formateur', 'Etudiant' (avec majuscule)
-    if ($user['role'] === 'Admin') {
-    return redirect()->to('/admin/dashboard');
-} elseif ($user['role'] === 'Formateur') {
-    return redirect()->to('/formateur/dashboard');
-} else {
-    return redirect()->to('/etudiant/dashboard');
-}
-}
     
     // Méthode 3 : 
     public function logout()

@@ -174,7 +174,43 @@ class Dashboard extends BaseController
      */
     public function modifierProfil()
     {
-        $id_compte = session()->get('id_compte');
+        $id_compte = (int) session()->get('id_compte');
+
+        $rules = [
+            'nom' => [
+                'rules'  => 'required|min_length[2]|max_length[50]',
+                'errors' => [
+                    'required'   => 'Le nom est obligatoire.',
+                    'min_length' => 'Le nom doit contenir au moins 2 caractères.',
+                    'max_length' => 'Le nom ne peut pas dépasser 50 caractères.',
+                ],
+            ],
+            'prenom' => [
+                'rules'  => 'required|min_length[2]|max_length[50]',
+                'errors' => [
+                    'required'   => 'Le prénom est obligatoire.',
+                    'min_length' => 'Le prénom doit contenir au moins 2 caractères.',
+                    'max_length' => 'Le prénom ne peut pas dépasser 50 caractères.',
+                ],
+            ],
+            'email' => [
+                'rules'  => "required|valid_email|max_length[100]|is_unique[comptes.email,id_compte,{$id_compte}]",
+                'errors' => [
+                    'required'    => 'L\'adresse email est obligatoire.',
+                    'valid_email' => 'L\'adresse email n\'est pas valide.',
+                    'max_length'  => 'L\'email ne peut pas dépasser 100 caractères.',
+                    'is_unique'   => 'Cette adresse email est déjà utilisée par un autre compte.',
+                ],
+            ],
+            'adresse'        => ['rules' => 'permit_empty|max_length[255]', 'errors' => []],
+            'code_postal'    => ['rules' => 'permit_empty|max_length[10]',  'errors' => []],
+            'date_naissance' => ['rules' => 'permit_empty|valid_date[Y-m-d]', 'errors' => ['valid_date' => 'La date de naissance n\'est pas valide.']],
+        ];
+
+        if (! $this->validate($rules)) {
+            session()->setFlashdata('errors', $this->validator->getErrors());
+            return redirect()->to(site_url('formateur/profil'));
+        }
 
         $this->compteModel->update($id_compte, [
             'nom'            => $this->request->getPost('nom'),
@@ -182,7 +218,7 @@ class Dashboard extends BaseController
             'email'          => $this->request->getPost('email'),
             'adresse'        => $this->request->getPost('adresse'),
             'code_postal'    => $this->request->getPost('code_postal'),
-            'date_naissance' => $this->request->getPost('date_naissance'),
+            'date_naissance' => $this->request->getPost('date_naissance') ?: null,
         ]);
 
         session()->setFlashdata('success', 'Profil mis à jour avec succès.');

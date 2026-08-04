@@ -221,6 +221,21 @@ class InscriptionsController extends BaseController
      */
     public function refuserPaiement(int $id_compte, int $id_session)
     {
+        $rules = [
+            'raison_refus_paiement' => [
+                'rules'  => 'required|max_length[500]',
+                'errors' => [
+                    'required'   => 'La raison du refus est obligatoire.',
+                    'max_length' => 'La raison ne peut pas dépasser 500 caractères.',
+                ],
+            ],
+        ];
+
+        if (! $this->validate($rules)) {
+            session()->setFlashdata('errors', $this->validator->getErrors());
+            return redirect()->to(site_url("admin/inscriptions/edit/$id_compte/$id_session"));
+        }
+
         $this->inscriptionModel->updateByKeys($id_compte, $id_session, [
             'raison_refus_paiement' => $this->request->getPost('raison_refus_paiement'),
             'date_envoi_paiement'   => null,

@@ -41,13 +41,15 @@ class SessionModel extends Model
 
     public function getSessionsOuvertes(int $id_compte): array
     {
-        return $this->select('sessions.*, formations.titre AS titre_formation,
+        $sql = "SELECT sessions.*, formations.titre AS titre_formation,
                 (SELECT COUNT(*) FROM inscriptions WHERE id_session = sessions.id_session) AS places_prises,
-                (SELECT COUNT(*) FROM inscriptions WHERE id_session = sessions.id_session AND id_compte = ' . $id_compte . ') AS deja_inscrit', false)
-                    ->join('formations', 'formations.id_formation = sessions.id_formation')
-                    ->where('sessions.statut', 'Ouverte')
-                    ->orderBy('sessions.date_debut', 'ASC')
-                    ->findAll();
+                (SELECT COUNT(*) FROM inscriptions WHERE id_session = sessions.id_session AND id_compte = ?) AS deja_inscrit
+                FROM sessions
+                JOIN formations ON formations.id_formation = sessions.id_formation
+                WHERE sessions.statut = 'Ouverte'
+                ORDER BY sessions.date_debut ASC";
+
+        return $this->db->query($sql, [$id_compte])->getResultArray();
     }
 
     public function getByFormateur(int $id_formateur): array

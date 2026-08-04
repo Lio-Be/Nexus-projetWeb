@@ -76,7 +76,7 @@
                         <?php else: ?>
                             <div style="font-size:12px; color:#9ca3af;">
                                 Virer vers : <strong>BE01 1234 5678 9012</strong><br>
-                                Communication : <strong><?= generate_structured_com($i['id_compte'], $i['id_session']) ?></strong><br>
+                                Communication : <strong><?= esc(generate_structured_com($i['id_compte'], $i['id_session'])) ?></strong><br>
                                 Montant : <strong><?= esc($i['prix']) ?> €</strong>
                             </div>
                             <form action="<?= site_url(($base_route ?? 'etudiant') . '/paiement/envoyer/' . $i['id_compte'] . '/' . $i['id_session']) ?>" method="POST" class="mt-1">

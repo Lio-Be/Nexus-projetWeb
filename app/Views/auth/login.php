@@ -33,6 +33,7 @@
                 <?php endif; ?>
 
                 <form action="<?= base_url('login') ?>" method="post">
+                    <?= csrf_field() ?>
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold" style="font-size:13px; color:#374151;">

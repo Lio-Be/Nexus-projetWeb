@@ -50,14 +50,13 @@
         <const name="CONFIGPATH" value="./app/Config/"/>
         <!-- Directory containing the front controller (index.php) -->
         <const name="PUBLICPATH" value="./public/"/>
-        <!-- Database configuration -->
-        <!-- Uncomment to provide your own database for testing
-            <env name="database.tests.hostname" value="localhost"/>
-            <env name="database.tests.database" value="tests"/>
-            <env name="database.tests.username" value="tests_user"/>
-            <env name="database.tests.password" value=""/>
-            <env name="database.tests.DBDriver" value="MySQLi"/>
-            <env name="database.tests.DBPrefix" value="tests_"/>
-            -->
+        <!-- Base de données de test — MySQL WAMP (nexus_test) -->
+        <!-- Ajuste le mot de passe si ton root WAMP en a un -->
+        <env name="database.tests.hostname" value="localhost"/>
+        <env name="database.tests.database" value="nexus_test"/>
+        <env name="database.tests.username" value="root"/>
+        <env name="database.tests.password" value=""/>
+        <env name="database.tests.DBDriver" value="MySQLi"/>
+        <env name="database.tests.DBPrefix" value=""/>
     </php>
 </phpunit>

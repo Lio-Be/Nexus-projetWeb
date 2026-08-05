@@ -87,3 +87,8 @@ $routes->group('etudiant', ['filter' => 'etudiant'], function($routes) {
     $routes->get('profil', 'Etudiant\Dashboard::profil');
     $routes->post('profil/modifier', 'Etudiant\Dashboard::modifierProfil');
 });
+
+/* ── API REST (sans authentification pour l'instant) ── */
+$routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
+    $routes->get('formations', 'FormationsController::index');
+});

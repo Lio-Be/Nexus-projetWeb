@@ -9,13 +9,11 @@ Application web full-stack de gestion pour un centre de formation, développée 
 ![Tests](https://img.shields.io/badge/tests-PHPUnit-3C9CD7)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-<!--
 ## Aperçu
 
-| Catalogue | Tableau de bord étudiant | Administration |
+| Catalogue des sessions | Espace étudiant (inscriptions et paiement) | Administration des formations |
 |---|---|---|
 | ![Catalogue](docs/captures/catalogue.png) | ![Étudiant](docs/captures/etudiant.png) | ![Admin](docs/captures/admin.png) |
--->
 
 ## Sommaire
 
@@ -80,7 +78,7 @@ Quelques choix d'implémentation qui ont demandé une réflexion particulière :
 
 ```bash
 cd C:\wamp64\www          # ou le dossier web de votre serveur
-git clone https://github.com/Lio-Be/Nexus.git nexus
+git clone https://github.com/Lio-Be/Nexus-projetWeb.git nexus
 cd nexus
 ```
 

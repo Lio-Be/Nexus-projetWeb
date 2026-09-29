@@ -1,25 +1,6 @@
-# Désactiver l'affichage des dossiers
-Options -Indexes
-
-# Activer le moteur de réécriture
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /nexus/public/
-    
-    # Rediriger tout vers index.php sauf fichiers existants
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+<IfModule authz_core_module>
+	Require all denied
 </IfModule>
-
-# Bloquer l'accès aux fichiers sensibles
-<FilesMatch "^\.">
-    Require all denied
-</FilesMatch>
-
-# Protection PHP
-<FilesMatch "\.php$">
-    <IfModule mod_authz_core.c>
-        Require all granted
-    </IfModule>
-</FilesMatch>
+<IfModule !authz_core_module>
+	Deny from all
+</IfModule>

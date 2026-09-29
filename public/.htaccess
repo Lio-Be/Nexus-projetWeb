@@ -1,3 +1,6 @@
+# Autorise l'accès à public/ (la racine du projet est bloquée par ../.htaccess)
+Require all granted
+
 # ============================================================================
 # .htaccess - Projet NEXUS (CodeIgniter 4)
 # ============================================================================

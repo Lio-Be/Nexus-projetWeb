@@ -2,12 +2,10 @@
 -- NEXUS — Base de données de démonstration
 -- ------------------------------------------------------------------
 -- Données fictives. Tous les comptes ont le mot de passe : password
--- Import : mysql -u root -p < database/nexus.sql  (ou via phpMyAdmin)
--- Puis   : php spark migrate   (crée la table api_tokens)
+-- À importer dans une base existante (ex. nexus_formations, utf8mb4) :
+--   mysql -u root -p nexus_formations < database/nexus.sql
+-- Puis : php spark migrate   (crée la table api_tokens)
 -- ------------------------------------------------------------------
-
-CREATE DATABASE IF NOT EXISTS `nexus_formations` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `nexus_formations`;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;

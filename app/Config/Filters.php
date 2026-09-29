@@ -13,6 +13,7 @@ use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\ApiAuthFilter;
+use App\Filters\ApiThrottleFilter;
 use App\Filters\AuthFilter;
 use App\Filters\AdminFilter;
 use App\Filters\FormateurFilter;
@@ -45,6 +46,7 @@ class Filters extends BaseFilters
         'formateur'     => FormateurFilter::class,
         'etudiant'      => EtudiantFilter::class,
         'api-auth'      => ApiAuthFilter::class,
+        'api-throttle'  => ApiThrottleFilter::class,
     ];
 
     /**

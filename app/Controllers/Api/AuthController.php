@@ -12,10 +12,12 @@ class AuthController extends ResourceController
 
     public function login()
     {
-        $email    = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+        // getVar() lit le corps JSON (Content-Type: application/json)
+        // aussi bien que les données de formulaire.
+        $email    = $this->request->getVar('email');
+        $password = $this->request->getVar('password');
 
-        if (empty($email) || empty($password)) {
+        if (! is_string($email) || ! is_string($password) || $email === '' || $password === '') {
             return $this->failUnauthorized('Email et mot de passe requis.');
         }
 
@@ -25,20 +27,12 @@ class AuthController extends ResourceController
             return $this->failUnauthorized('Email ou mot de passe incorrect.');
         }
 
-        $token    = bin2hex(random_bytes(32));
-        $expireAt = date('Y-m-d H:i:s', strtotime('+24 hours'));
-
-        (new ApiTokenModel())->insert([
-            'id_compte'       => $user['id_compte'],
-            'token'           => $token,
-            'date_expiration' => $expireAt,
-            'date_creation'   => date('Y-m-d H:i:s'),
-        ]);
+        $token = (new ApiTokenModel())->creerToken((int) $user['id_compte']);
 
         return $this->respond([
             'status' => 200,
-            'token'  => $token,
-            'expire' => $expireAt,
+            'token'  => $token['token'],
+            'expire' => $token['expire'],
         ]);
     }
 }

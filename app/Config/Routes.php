@@ -92,7 +92,10 @@ $routes->group('etudiant', ['filter' => 'etudiant'], function($routes) {
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
     // Public — pas d'authentification requise
     $routes->get('formations', 'FormationsController::index');
-    $routes->post('login', 'AuthController::login');
+    $routes->post('login', 'AuthController::login', ['filter' => 'api-throttle']);
 
-    // Protégé — ajouter ['filter' => 'api-auth'] sur chaque sous-groupe privé
+    // Protégé — token requis (en-tête Authorization: Bearer <token>)
+    $routes->group('', ['filter' => 'api-auth'], static function ($routes) {
+        $routes->get('mes-inscriptions', 'InscriptionsController::mesInscriptions');
+    });
 });

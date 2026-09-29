@@ -1,0 +1,57 @@
+#--------------------------------------------------------------------
+# NEXUS — Fichier d'environnement modèle
+#--------------------------------------------------------------------
+# Copier ce fichier en ".env" puis adapter les valeurs :
+#   cp env .env
+# Le fichier .env ne doit jamais être commité (il est dans .gitignore).
+#--------------------------------------------------------------------
+
+#--------------------------------------------------------------------
+# ENVIRONMENT
+#--------------------------------------------------------------------
+# development | production
+CI_ENVIRONMENT = development
+
+#--------------------------------------------------------------------
+# APP
+#--------------------------------------------------------------------
+# URL d'accès au dossier public/, avec slash final.
+#   WAMP/XAMPP : 'http://localhost/nexus/public/'
+#   php spark serve : 'http://localhost:8080/'
+app.baseURL = 'http://localhost/nexus/public/'
+
+#--------------------------------------------------------------------
+# DATABASE
+#--------------------------------------------------------------------
+database.default.hostname = localhost
+database.default.database = nexus_formations
+database.default.username = root
+database.default.password =
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
+
+#--------------------------------------------------------------------
+# SECURITY
+#--------------------------------------------------------------------
+# Générer une clé avec : php spark key:generate
+encryption.key =
+
+#--------------------------------------------------------------------
+# SESSION (stockées en base, table ci_sessions)
+#--------------------------------------------------------------------
+session.driver = CodeIgniter\Session\Handlers\DatabaseHandler
+session.cookieName = nexus_session
+session.expiration = 7200
+session.savePath = ci_sessions
+session.matchIP = false
+session.timeToUpdate = 300
+session.regenerateDestroy = false
+
+#--------------------------------------------------------------------
+# NEXUS
+#--------------------------------------------------------------------
+nexus.appName = 'NEXUS - Centre de Formations'
+nexus.appVersion = '1.0.0'
+nexus.uploadPath = 'writable/uploads/'
+nexus.maxUploadSize = 2048

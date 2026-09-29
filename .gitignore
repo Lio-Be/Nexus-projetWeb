@@ -39,4 +39,4 @@ phpunit.xml
 # Tests PHPUnit
 phpunit.xml
 build/
-phpunit.phar
+phpunit*.phar

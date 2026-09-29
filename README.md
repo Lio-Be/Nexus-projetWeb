@@ -232,7 +232,8 @@ nexus/
 ├── database/
 │   └── nexus.sql          # Schéma et données de démonstration
 ├── docs/
-│   └── academique/        # Documentation de conception (méthodologie Merise, RUP)
+│   ├── captures/          # Captures d'écran du README
+│   └── technique/         # Notes techniques (MVC, routes et filtres, clé composite, arborescence)
 ├── public/                # Point d'entrée (index.php) et assets statiques
 ├── system/                # Framework CodeIgniter 4
 ├── tests/                 # Tests PHPUnit

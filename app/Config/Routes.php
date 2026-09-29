@@ -88,7 +88,11 @@ $routes->group('etudiant', ['filter' => 'etudiant'], function($routes) {
     $routes->post('profil/modifier', 'Etudiant\Dashboard::modifierProfil');
 });
 
-/* ── API REST (sans authentification pour l'instant) ── */
+/* ── API REST ── */
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
+    // Public — pas d'authentification requise
     $routes->get('formations', 'FormationsController::index');
+    $routes->post('login', 'AuthController::login');
+
+    // Protégé — ajouter ['filter' => 'api-auth'] sur chaque sous-groupe privé
 });
